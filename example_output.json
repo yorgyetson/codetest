@@ -1,0 +1,13 @@
+[[
+  { "firstName": "Bodie", "occupation": "student", "lastName": "pardon?" },
+  { "firstName": "Chris", "occupation": "student", "lastName": "Knight" },
+  { "firstName": "Ick", "occupation": "student", "lastName": "Ikagami" },
+  { "firstName": "Jordan", "occupation": "student", "lastName": "Cochran" },
+  { "firstName": "Kent", "occupation": "student", "lastName": "pardon?" },
+  { "firstName": "Mitch", "occupation": "student", "lastName": "Taylor" }
+],
+[
+  { "firstName": "pardon?", "occupation": "dean", "lastName": "Meredith" },
+  { "firstName": "Lazlo", "occupation": "pardon?", "lastName": "Hollyfeld" },
+  { "firstName": "Jerry", "occupation": "tenured professor", "lastName": "Hathoway" }
+]]
