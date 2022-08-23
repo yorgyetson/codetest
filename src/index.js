@@ -9,11 +9,18 @@ const peopleSorter = (firstNames = [], personnel = []) => {
   // Iterate through longest array value to ensure all entities are parsed in both objects
   for (let i = 0; i < count; i++) {
     let person = {
-      firstName: firstNames[i] || "pardon?",
-      lastName: personnel[i]?.lastName || "pardon?",
-      occupation: personnel[i]?.occupation || "pardon?",
+      ...personnel[i],
+      firstName: firstNames[i],
+      lastName: personnel[i]?.lastName,
+      occupation: personnel[i]?.occupation,
+      
     };
 
+    Object.entries(person).forEach(([key, value]) => {
+      if (!value) {
+        person[key] = "pardon?";
+      }
+    });
     // Push person to respective array
     person["occupation"].toLowerCase() === "student"
       ? students.push(person)
