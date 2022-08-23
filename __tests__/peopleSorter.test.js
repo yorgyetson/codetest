@@ -1,7 +1,9 @@
-const peopleSorter = require("../src/index.js");
+const peopleSorter = require("../src/peopleSorter.js");
 
-const data = require("../data.js");
-const example_output = require("../example_output.json");
+const data = require("../data/data.js");
+const example_output = require("../data/example_output.json");
+const extra_data = require("../data/extra_data.js");
+const extra_example_output = require("../data/extra_example_output.json");
 
 describe("peopleSorter function", () => {
   it("always returns an array of two arrays", () => {
@@ -67,6 +69,57 @@ describe("peopleSorter function", () => {
 
   it("replaces invalid values with 'pardon?'", () => {
     let output = peopleSorter(data["firstNames"], data["personnel"]);
+
+    invalidCount = 0;
+    replacedCount = 0;
+
+    data["firstNames"].forEach((firstName) => {
+      !firstName && invalidCount++;
+      firstName == "pardon?" && replacedCount--;
+    });
+
+    data["personnel"].forEach((person) => {
+      for (const key in person) {
+        if (!person[key]) {
+          invalidCount++;
+        } else if (person[key] == "pardon?") {
+          replacedCount--;
+        }
+      }
+    });
+
+    output.forEach((group) => {
+      group.forEach((person) => {
+        for (const key in person) {
+          if (person[key] == "pardon?") {
+            replacedCount++;
+          }
+        }
+      });
+    });
+
+    expect(invalidCount).toEqual(invalidCount);
+  });
+});
+
+describe("peopleSorter function extra tests", () => {
+  it("returns extra_example output when given the extra_example input", () => {
+    const consoleSpy = jest.spyOn(console, "log");
+
+    expect(
+      peopleSorter(extra_data["firstNames"], extra_data["personnel"])
+    ).toEqual(extra_example_output);
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.objectContaining(extra_example_output)
+    );
+  });
+
+  it("replaces invalid values with 'pardon?'", () => {
+    let output = peopleSorter(
+      extra_data["firstNames"],
+      extra_data["personnel"]
+    );
 
     invalidCount = 0;
     replacedCount = 0;
