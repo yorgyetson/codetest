@@ -6,21 +6,13 @@ const example_output = require("../example_output.json");
 describe("peopleSorter function", () => {
   it("always returns an array of two arrays", () => {
     // no data
-    expect(peopleSorter()).toEqual(
-      expect.arrayContaining([], [])
-    );
-    // all data
-    expect(peopleSorter(data["firstNames"], data["personnel"])).toEqual(
-      expect.arrayContaining([], [])
-    );
+    expect(peopleSorter()).toEqual([[], []]);
+    //all data
+    expect(peopleSorter(data["firstNames"], data["personnel"]).length).toBe(2);
     // only first names
-    expect(peopleSorter((firstNames = data["firstNames"]))).toEqual(
-      expect.arrayContaining([], [])
-    );
+    expect(peopleSorter((firstNames = data["firstNames"])).length).toBe(2);
     // only personnel
-    expect(peopleSorter((personnel = data["personnel"]))).toEqual(
-      expect.arrayContaining([], [])
-    );
+    expect(peopleSorter((personnel = data["personnel"])).length).toBe(2);
   });
 
   it("returns the example output when given the example input", () => {
@@ -32,8 +24,8 @@ describe("peopleSorter function", () => {
   it("logs output to the console", () => {
     const consoleSpy = jest.spyOn(console, "log");
 
-    peopleSorter(data["firstNames"], data["personnel"])
-    
+    peopleSorter(data["firstNames"], data["personnel"]);
+
     expect(consoleSpy).toHaveBeenCalledWith(
       expect.objectContaining(example_output)
     );
@@ -93,4 +85,3 @@ describe("peopleSorter function", () => {
     expect(invalidCount).toEqual(invalidCount);
   });
 });
-
