@@ -1,3 +1,5 @@
+const data = require("../data.js");
+
 const peopleSorter = (firstNames = [], personnel = []) => {
   let students = [];
   let faculty = [];
@@ -40,5 +42,7 @@ const peopleSorter = (firstNames = [], personnel = []) => {
 
   return [students, faculty];
 };
+
+const [students, faculty] = peopleSorter(data["firstNames"], data["personnel"]);
 
 module.exports = peopleSorter;
