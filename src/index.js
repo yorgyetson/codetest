@@ -1,4 +1,13 @@
 const peopleSorter = (firstNames = [], personnel = []) => {
+
+  if (firstNames.constructor != Array) {
+    firstNames = [];
+  }
+
+  if (personnel.constructor != Array) {
+    personnel = [];
+  }
+
   let students = [];
   let faculty = [];
 
@@ -13,7 +22,6 @@ const peopleSorter = (firstNames = [], personnel = []) => {
       firstName: firstNames[i],
       lastName: personnel[i]?.lastName,
       occupation: personnel[i]?.occupation,
-      
     };
 
     Object.entries(person).forEach(([key, value]) => {
@@ -47,5 +55,8 @@ const peopleSorter = (firstNames = [], personnel = []) => {
 
   return [students, faculty];
 };
+
+data = require("../data.js");
+peopleSorter([], data["personnel"]);
 
 module.exports = peopleSorter;
