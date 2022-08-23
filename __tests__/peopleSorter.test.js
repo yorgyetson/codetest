@@ -5,21 +5,25 @@ const example_output = require("../example_output.json");
 
 describe("peopleSorter function", () => {
   it("always returns an array of two arrays", () => {
+
     // no data
     let output = peopleSorter();
     expect(output).toEqual([[], []]);
+
     //all data
     output = peopleSorter(data["firstNames"], data["personnel"]);
     expect(output.constructor == Array).toBe(true);
     expect(output.length).toBe(2);
     expect(output.filter(Array.isArray).length).toBe(2);
+
     // only first names
-    output = peopleSorter(data["firstNames"], []);
+    output = peopleSorter(data["firstNames"], undefined);
     expect(output.constructor == Array).toBe(true);
     expect(output.length).toBe(2);
     expect(output.filter(Array.isArray).length).toBe(2);
+
     // only personnel
-    output = peopleSorter([], data["personnel"]);
+    output = peopleSorter(undefined, data["personnel"]);
     expect(output.constructor == Array).toBe(true);
     expect(output.length).toBe(2);
     expect(output.filter(Array.isArray).length).toBe(2);
