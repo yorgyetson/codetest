@@ -1,26 +1,35 @@
 const data = require("../data.js");
 
 const peopleSorter = (firstNames = [], personnel = []) => {
+  if (!Array.isArray(firstNames)) {
+    firstNames = [];
+  }
+
+  if (!Array.isArray(personnel)) {
+    personnel = [];
+  }
+
+  let combined = personnel.map((person, i) => ({
+    occupation: null,
+    lastName: null,
+    ...person,
+    firstName: firstNames[i],
+  }));
+
   let students = [];
   let faculty = [];
 
-  // Determine length of longest array
-  let count =
-    firstNames.length > personnel.length ? firstNames.length : personnel.length;
-
-  // Iterate through longest array value to ensure all entities are parsed in both objects
-  for (let i = 0; i < count; i++) {
-    let person = {
-      firstName: firstNames[i] || "pardon?",
-      lastName: personnel[i]?.lastName || "pardon?",
-      occupation: personnel[i]?.occupation || "pardon?",
-    };
-
-    // Push person to respective array
+  // Replace invalid data with 'pardon?' and sort people by occupation
+  combined.forEach((person) => {
+    Object.entries(person).forEach(([key, value]) => {
+      if (!value) {
+        person[key] = "pardon?";
+      }
+    });
     person["occupation"].toLowerCase() === "student"
       ? students.push(person)
       : faculty.push(person);
-  }
+  });
 
   // Sort students array ascending by first name
   students.sort((a, b) => {

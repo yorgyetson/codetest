@@ -5,26 +5,31 @@ const example_output = require("../example_output.json");
 
 describe("peopleSorter function", () => {
   it("always returns an array of two arrays", () => {
-
     // no data
     let output = peopleSorter();
     expect(output).toEqual([[], []]);
 
     //all data
     output = peopleSorter(data["firstNames"], data["personnel"]);
-    expect(output.constructor == Array).toBe(true);
+    expect(output.constructor === Array).toBe(true);
     expect(output.length).toBe(2);
     expect(output.filter(Array.isArray).length).toBe(2);
 
     // only first names
-    output = peopleSorter(data["firstNames"], undefined);
-    expect(output.constructor == Array).toBe(true);
+    output = peopleSorter(data["firstNames"], []);
+    expect(output.constructor === Array).toBe(true);
     expect(output.length).toBe(2);
     expect(output.filter(Array.isArray).length).toBe(2);
 
     // only personnel
     output = peopleSorter(undefined, data["personnel"]);
-    expect(output.constructor == Array).toBe(true);
+    expect(output.constructor === Array).toBe(true);
+    expect(output.length).toBe(2);
+    expect(output.filter(Array.isArray).length).toBe(2);
+
+    // non-array input
+    output = peopleSorter("some string", "another string");
+    expect(output.constructor === Array).toBe(true);
     expect(output.length).toBe(2);
     expect(output.filter(Array.isArray).length).toBe(2);
   });
@@ -73,15 +78,17 @@ describe("peopleSorter function", () => {
 
     data["firstNames"].forEach((firstName) => {
       !firstName && invalidCount++;
-      firstName == "pardon?" && replacedCount--;
+      firstName === "pardon?" && replacedCount--;
     });
 
     data["personnel"].forEach((person) => {
+      invalidCount += (2 - Object.keys(person).length)
       for (const key in person) {
         if (!person[key]) {
           invalidCount++;
-        } else if (person[key] == "pardon?") {
-          replacedCount--;
+        }
+        if (person[key] === "pardon") {
+          invalidCount--;
         }
       }
     });
@@ -89,13 +96,13 @@ describe("peopleSorter function", () => {
     output.forEach((group) => {
       group.forEach((person) => {
         for (const key in person) {
-          if (person[key] == "pardon?") {
+          if (person[key] === "pardon?") {
             replacedCount++;
           }
         }
       });
     });
-
-    expect(invalidCount).toEqual(invalidCount);
+    expect(replacedCount).toEqual(invalidCount);
+    
   });
 });
